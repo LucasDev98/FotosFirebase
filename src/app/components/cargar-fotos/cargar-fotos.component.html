@@ -1,0 +1,53 @@
+
+<div class="row">
+  <div class="col-md-8"></div>
+    <div class="col-md-4" *ngIf="imagenErrores.length > 0 " >
+        <div class="alert alert-danger" *ngFor="let error of imagenErrores" >
+          La imagen {{error}} ya fue cargada
+        </div>
+    </div>
+</div>
+<div class="row">
+
+  <div class="col-4">
+      <h3>Seleccion archivos</h3>
+      <div  [ImagenFueSubida]="imagenErrores" appNgDrop [archivos]="archivos" [ngClass]="{'file-over': estaSobreElemento}" (esSobreElemento)="estaSobreElemento=$event" class="well drop-zone">
+        <h4>Arrastre la imagen</h4>
+        <img src="assets/img/drop-images.png">
+
+      </div>
+  </div>
+  <div class="col-8">
+      <h4>Cargar Archivos</h4>
+
+      <button class="btn mr-2 btn-success" (click)="cargarFotos()">Cargar a Firebase</button>
+      <button class="btn btn-danger" (click)="archivos = []">Limpiar</button>
+      <table class="table">
+          <thead class="thead_dark">
+              <th>
+                  Nombre
+              </th>
+              <th>
+                Peso
+              </th>
+              <th>
+                Progreso
+              </th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let archivo of archivos">
+                <td>{{ archivo.nombre_archivo }} </td>
+                <td>
+                  {{ (archivo.archivo.size / 1024) / 1024 | number :'1.1' }} KB
+                </td>
+                <td>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar"  style="width: 50%" [ngStyle]="{width: archivo.progreso+'%'}"></div>
+                  </div>
+
+                </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
